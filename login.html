@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="{{ url_for('static', filename='videos/login video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="form-container">
+        <h1>Login</h1>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+        </form>
+    </div>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting traditionally
+
+            // Example validation (optional, can be replaced with real validation logic)
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                alert('Login Successful'); // Optional feedback to the user
+
+                // Redirect to the chatbot page
+                window.location.href = "{{ url_for('chatbot') }}";
+            } else {
+                alert('Please fill in both email and password.');
+            }
+        }
+    </script>
+</body>
+</html>

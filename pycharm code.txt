@@ -1,0 +1,479 @@
+1) hello.py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+# Route for the signup page
+@app.route('/')
+def signup():
+    return render_template('index.html')
+
+# Route for the chatbot page
+@app.route('/chatbot')
+def chatbot():
+    return render_template('chatbot.html')
+
+@app.route('/login.html')
+def login():
+    return render_template('login.html')
+
+@app.route('/signin.html')
+def signin():
+    return render_template('signin.html')
+
+# Corrected main entry point
+if __name__ == '__main__':
+    app.run(debug=True)
+
+2) index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Home Page</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+    <source src="{{ url_for('static', filename='videos/anime.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+    <div class="button-container">
+        <h1 style="color: white;"> Welcome to Your Personalized AI Chatbot Companion</h1>
+        <p style="color: white;"> Experience the future of conversations with our intelligent assistant.</p>
+        <button onclick="location.href='{{ url_for('login') }}'">Login</button>
+        <button onclick="location.href='{{ url_for('signin') }}'">Sign Up</button>
+    </div>
+</body>
+</html>
+3) login.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="{{ url_for('static', filename='videos/login video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="form-container">
+        <h1>Login</h1>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+        </form>
+    </div>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting traditionally
+
+            // Example validation (optional, can be replaced with real validation logic)
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email && password) {
+                alert('Login Successful'); // Optional feedback to the user
+
+                // Redirect to the chatbot page
+                window.location.href = "{{ url_for('chatbot') }}";
+            } else {
+                alert('Please fill in both email and password.');
+            }
+        }
+    </script>
+</body>
+</html>
+4) chatbot.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    /* Ensure full-screen background video */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures video covers the entire screen */
+      z-index: -1; /* Send video to the background */
+    }
+
+    /* Optional styling for content overlay */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin-top: 20%;
+    }
+
+    .content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop class="background-video">
+    <source src="{{ url_for('static', filename='videos/chatbot video.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Optional content overlay -->
+  <div class="content">
+    <h1>Welcome to the Chatbot</h1>
+    <p>Interact with your personalized AI assistant.</p>
+  </div>
+</body>
+</html>
+5) signin.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='signin.css') }}">
+</head>
+<body>
+  <video autoplay muted loop class="background-video">
+    <source src="{{ url_for('static', filename='videos/signup video.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="signup-container">
+    <h2>Create Your Own Account</h2>
+    <form id="signup-form">
+      <div class="input-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="input-group">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div class="input-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+      <button type="submit" class="signup-button">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    // JavaScript to handle form submission and redirect
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Redirect to chatbot.html using Flask's dynamic URL
+      window.location.href = "{{ url_for('chatbot') }}";
+    });
+  </script>
+</body>
+</html>
+6)styles.css
+/* Background video styling */
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Send the video behind other content */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrolling */
+    position: relative;
+}
+
+/* Content box positioning */
+.button-container {
+    position: absolute;
+    top: 52%; /* Adjusted to position above the "AI" box */
+    left: 75%;
+    height: 45%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent box */
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px; /* Adjust box width */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.button-container h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.button-container p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.button-container button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+7) login.css
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+.form-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent box */
+    text-align: center;
+    width: 300px;
+}
+
+.form-container h1 {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.form-container label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+    color: white;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.form-container .forgot-password {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.form-container .forgot-password:hover {
+    text-decoration: underline;
+}
+8) signin.css
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+  .signup-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent box */
+    color: white;
+  }
+
+  .signup-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .signup-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .signup-button:hover {
+    background-color: #0056b3;
+  }
+9) chatbot.css
+/*/ chatbot.css /*/
+.chatbot-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chat-window {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    height: 400px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-message {
+    text-align: left;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.bot-message {
+    text-align: left;
+    color: #333;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+}
+
+form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
